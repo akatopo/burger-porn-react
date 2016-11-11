@@ -1,0 +1,14 @@
+@import 'vars';
+@import 'mixins';
+
+.bp-popoverContainer {
+  display: inline-block;
+}
+
+.bp-popoverContainer.is-expanded .bp-popover{
+  transform: scaleY(1) scaleX(1);
+}
+
+.bp-popoverContainer.is-expanded .bp-svg {
+  @include path-outline($color-pornPink);
+}

@@ -1,0 +1,5 @@
+@mixin path-outline($color) {
+  fill: rgba(0, 0, 0, 0);
+  stroke-opacity: 1;
+  stroke: $color;
+}

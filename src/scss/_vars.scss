@@ -1,0 +1,44 @@
+// Colors
+
+$color-pornPink: rgb(220, 127, 133);
+$amount-globalOpacity: 0.3;
+
+// Fonts
+
+$fontSize-base: 28px;
+$fontSize-micro: ceil(($fontSize-base * 0.1)); // ~3px
+$fontSize-smallest: ceil(($fontSize-base * 0.25)); //7px
+$fontSize-smallish: ceil(($fontSize-base * 0.4)); // ~12px
+$fontSize-smaller: ceil(($fontSize-base * 0.5)); // 14px
+$fontSize-small: ceil(($fontSize-base * 0.75)); // 21px
+$fontSize-large: ceil(($fontSize-base * 1.25)); // 35px
+$fontSize-larger: ceil(($fontSize-base * 1.5)); // 42px
+$fontSize-largest: ceil(($fontSize-base * 1.75)); // 49px
+$fontSize-jumbo: ceil(($fontSize-base * 2)); // 56px;
+
+$lineHeight-base: 1.3;
+
+// Buttons
+
+$width-btn--round: 48px;
+$height-btn--round: $width-btn--round;
+$padding-btn--round: 10px;
+$margin-btnGroup: 25px;
+
+// Map
+
+$width-map: 600px;
+$height-map: 400px;
+
+// Popover
+
+$padding-popover: 10px;
+
+// Banner
+
+$padding-banner: 0.5em;
+$borderRadius-banner--leftDockRounded: 0.5em;
+
+//Content
+
+$margin-content: 10px;

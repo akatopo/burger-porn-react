@@ -1,0 +1,20 @@
+@import 'vars';
+
+.bp-popover {
+  position: absolute;
+  transform: scaleY(0) scaleX(0);
+  transition: all 0.5s;
+  overflow: hidden;
+  transform-origin: 50% 100% 0;
+}
+
+.bp-popover--bottomRight {
+  right: 0;
+  bottom: ($height-btn--round + ($padding-btn--round * 2) + $margin-btnGroup);
+}
+
+.bp-location-group .bp-popover {
+  // FIXME $padding-banners is in ems
+  // transform-origin: (($width-map + $padding-banner * 2)  - (($width-btn--round + $padding-btn--round) * 1.5) - $margin-btnGroup) 100% 0;
+  transform-origin: (($width-map)  - (($width-btn--round + $padding-btn--round) * 1.5) - $margin-btnGroup) 100% 0;
+}

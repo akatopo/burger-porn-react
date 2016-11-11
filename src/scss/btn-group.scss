@@ -1,0 +1,49 @@
+@import 'vars';
+@import 'mixins';
+
+.bp-btnGroup--horizontal {
+  margin-right: -$margin-btnGroup;
+}
+
+.bp-btnGroup--vertical {
+  margin-top: -$margin-btnGroup;
+}
+
+.bp-btnGroup--expandable {
+  display: inline-block;
+  position: relative;
+}
+
+@mixin generate-expandable($n, $i-init: 2) {
+  @for $i from $i-init through $n+1 {
+    .bp-btnGroup--vertical.bp-btnGroup--expandable > .bp-btn--round:nth-child(#{$i}) {
+      position: absolute;
+      left: 0;
+      bottom: (($i - 1) * ($height-btn--round + (2 * $padding-btn--round) + $margin-btnGroup));
+      transition: all 0.5s;
+      transform: scale(0);
+      transition-delay: ($n - 1 - ($i - 2)) * 0.05s;
+    }
+  }
+}
+@include generate-expandable(3);
+
+@mixin generate-expanded($n, $i-init: 2) {
+  @for $i from $i-init through $n+1 {
+    .bp-btnGroup--expandable.is-expanded > .bp-btn--round:nth-child(#{$i}) {
+      transform: scale(1);
+      transition-delay: ($i - 2) * 0.05s;
+    }
+  }
+}
+@include generate-expanded(3);
+
+.bp-btnGroup--expandable.is-expanded > .bp-btn--round:nth-child(1) .bp-svg {
+  @include path-outline($color-pornPink);
+}
+
+.bp-btnGroup--horizontal > .bp-btn,
+.bp-btnGroup--horizontal > .bp-btnGroup,
+.bp-btnGroup--horizontal > .bp-popoverContainer {
+  margin-right: $margin-btnGroup;
+}

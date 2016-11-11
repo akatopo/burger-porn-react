@@ -1,0 +1,12 @@
+@import 'vars';
+
+.bp-map {
+  // color: black;
+  border: 0;
+  height: $height-map;
+  width: $width-map;
+}
+
+.bp-map p {
+  margin: .5rem 0;
+}

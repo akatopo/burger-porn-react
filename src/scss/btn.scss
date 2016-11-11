@@ -1,0 +1,73 @@
+@import 'vars';
+@import 'mixins';
+
+.bp-btn {
+  display: inline-block;
+  cursor: pointer;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.bp-btn:focus {
+  outline: none;
+}
+
+// .bp-btn:hover .bp-path,
+.bp-btn:hover .bp-svg {
+  fill: $color-pornPink;
+}
+
+.bp-btn:hover > .bp-btn-label {
+  color: white;
+}
+
+.bp-btn--round {
+  color: white;
+  background: fade-out(black, $amount-globalOpacity);
+  // border-color: white;
+  // border: $borderWidth-btn--round solid white;
+  // background: #FFF;
+  border-radius: 50%;
+  padding: $padding-btn--round;// - $borderWidth-btn--round;
+
+  height: $height-btn--round + (2 * $padding-btn--round);
+  width: $width-btn--round + (2 * $padding-btn--round);
+  // box-shadow: 0px 0px 5px fade-out(0, 0, 0, 1);
+}
+
+.bp-btn--round > .bp-svg {
+  height: $height-btn--round;
+  width: $width-btn--round;
+}
+
+// .bp-btn--round .bp-path,
+.bp-btn .bp-svg {
+  fill: white;
+  stroke: white;
+  stroke-opacity: 0;
+  stroke-width: 1px;
+  transition: 0.3s all;
+}
+
+.bp-btn--round > .bp-btn-label {
+  position: absolute;
+  color: #999;
+  line-height: $height-btn--round - 1px;
+  width: $width-btn--round;
+  text-align: center;
+  font-size: $fontSize-smallish;
+}
+
+
+.bp-loveButton.is-toggled:hover .bp-svg {
+  @include path-outline(#fff);
+}
+
+.bp-loveButton.is-toggled .bp-svg {
+  fill: red;
+}
+
+.bp-loveButton.is-toggled > .bp-btn-label {
+  color: white;
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="{{ htmlWebpackPlugin.options.description }}" />
+  <meta name="author" content="{{ htmlWebpackPlugin.options.author }}" />
+  <title>{{ htmlWebpackPlugin.options.title }}</title>
+</head>
+<body>
+  <svg style="display:none;">
+    {{#each htmlWebpackPlugin.options.icons}}
+      <symbol id="{{this}}-icon" viewBox="0 0 96 96.000001">
+        {{{loadPartial (lookup ../htmlWebpackPlugin.options.icons @index) }}}
+      </symbol>
+    {{/each}}
+  </svg>
+  <div id="root"></div>
+</body>
+</html>

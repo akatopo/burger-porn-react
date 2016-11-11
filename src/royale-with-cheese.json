@@ -1,0 +1,40 @@
+{
+  "_id" : "54e11d893b7eee250bf5b154",
+  "name" : "Royale with cheese",
+  "desc" : "",
+  "ingredients" : [
+    "pickles",
+    "goat cheese",
+    "chili sauce",
+    "caramelized onions"
+  ],
+  "loc" : {
+    "name" : "Johny Burger",
+    "placeId" : "ChIJebJ94C5amhQRdsMVbKfqvM0",
+    "address" : "Minotavrou 4, Heraklion 712 02, Greece",
+    "latLong" : [
+      35.340401,
+      25.132625
+    ]
+  },
+  "love" : [
+    "afe169520e30f74e99e5e9cc52ef9370b2638dfe",
+    "41e333a59c248c3b68141106a549eb755944e23d",
+    "9d512c754d2fe653566f7699eef7af6f3374352b",
+    "ea7d13f544066a3a31a0907a2da75d5b6824c228",
+    "9809333787375364c130c2f22eff89aac7d1dfb4"
+  ],
+  "pictures" : [
+    {
+      "width" : 1280,
+      "height" : 720,
+      "url" : "http://localhost:3000/assets/royale-1280x720.jpg"
+    },
+    {
+      "width" : 1920,
+      "height" : 1080,
+      "url" : "http://localhost:3000/assets/royale-1920x1080.jpg"
+    }
+  ],
+  "__v" : 69
+}
