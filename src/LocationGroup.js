@@ -4,23 +4,36 @@ import React, { Component } from 'react';
 import createObservable from './focusLost';
 
 const API_KEY = 'AIzaSyCOmQoeVtIKV5xyAVIe3BnFFejQgHEjv0I';
-const maps = require('google-maps-api')(API_KEY, ['places']);
+const maps = require('google-maps-api')(API_KEY, ['places'])();
 
 class LocationGroup extends Component {
   componentDidMount() {
-    const { isExpanded, onFocusLost } = this.props;
+    const { loc } = this.props;
 
     createObservable(this.groupRef)
       .forEach((/* target */) => {
+        const { isExpanded, onFocusLost } = this.props;
         if (isExpanded) {
           onFocusLost();
         }
       });
+
+    maps
+      .then((mapsApi) => {
+        this.loadMap(mapsApi, loc);
+      })
+      .catch((err) => window.console.error(err));
   }
 
-  componentWillUpdate() {
+  componentDidUpdate(prevProps) {
+    const oldLoc = prevProps.loc;
     const { loc } = this.props;
-    maps()
+
+    if (oldLoc.placeId === loc.placeId) {
+      return;
+    }
+
+    maps
       .then((mapsApi) => {
         this.loadMap(mapsApi, loc);
       })
