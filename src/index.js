@@ -1,9 +1,6 @@
+import 'babel-polyfill';
+import thunkMiddleware from 'redux-thunk';
 import app from './app';
-import routes from './routes';
-import Layout from './layout';
-
-import burger from './royale-with-cheese.json';
-import './focusLost';
 
 const identity = (x) => x;
 
@@ -23,7 +20,18 @@ const boolReducer = (toBool, boundActionType) =>
 
 export const reducers = {
   title: identity,
-  burger: identity,
+  burger: (prevState, action) => {
+    switch (action.type) {
+      case 'REQUEST_BURGER':
+        return prevState.set('isFetching', true);
+      case 'RECEIVE_BURGER':
+        return prevState
+          .set('data', action.burger)
+          .set('isFetching', false);
+      default:
+        return prevState;
+    }
+  },
   isLoved: toggleReducer('TOGGLE_LOVE'),
   isShareGroupExpanded: (prevState, action) => {
     switch (action.type) {
@@ -52,7 +60,10 @@ export const initialState = {
   isLoved: false,
   isShareGroupExpanded: false,
   isLocationGroupExpanded: false,
-  burger,
+  burger: {
+    isFetching: false,
+    data: undefined,
+  },
 };
 
-app({ reducers, initialState, Layout, routes }).render();
+app({ reducers, initialState, middleware: [thunkMiddleware] }).render();

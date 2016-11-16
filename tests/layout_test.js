@@ -11,7 +11,7 @@ chai.use(chaiEnzyme());
 
 describe('<Layout />', () => {
   it('renders main and BurgerApp element', () => {
-    const wrapper = shallow(<Layout />);
+    const wrapper = shallow(<Layout params={{}} />);
 
     expect(wrapper.find(BurgerApp)).to.have.length(1);
   });

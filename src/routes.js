@@ -1,7 +1,14 @@
-import Home from './home';
-import About from './about';
+import React from 'react';
+import { Route } from 'react-router';
+import Layout from './layout';
 
-export default [
-  { path: '/', title: 'Home', component: Home },
-  { path: '/about', title: 'About', component: About },
-];
+const identity = (x) => x;
+
+const routes = (devToolsWrapper = identity) => (
+  <Route path="/" component={devToolsWrapper(Layout)}>
+    <Route path="burgers/:id" component={devToolsWrapper(Layout)} />
+  </Route>
+);
+routes.displayName = 'Routes';
+
+export default routes;

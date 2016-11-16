@@ -1,70 +1,96 @@
 /* global window:false */
 
-import React from 'react';
-
+import React, { Component } from 'react';
 import LoveButton from './LoveButton';
 import LocationGroup from './LocationGroup';
 import ShareGroup from './ShareGroup';
 
 import './scss/burger-container.scss';
 
-export default function BurgerContainer({
-  burger,
-  isLoved,
-  isShareGroupExpanded,
-  isLocationGroupExpanded,
-  onLoveButtonClicked,
-  onShareButtonClicked,
-  onLocationButtonClicked,
-  onLocationGroupFocusLost,
-  onShareGroupFocusLost,
-}) {
-  const ingredients = burger.ingredients
-    .map((i, index) => (<li key={index}>{i}</li>));
+export default class BurgerContainer extends Component {
+  componentDidMount() {
+    if (this.props.burger.data) {
+      return;
+    }
+    this.props.fetchBurger();
+  }
 
-  return (
-    <div
-      className="bp-burgerContainer"
-      style={getBackgroundContainerStyle(burger.pictures)}
-    >
-      <div className="bp-brand u-allCaps">
-        Burger<span className="bp-brand-highlight">Porn</span>
-      </div>
-      <div className="bp-content bp-content--left">
-        <h2 className="u-allCaps bp-banner bp-banner--primary bp-banner--leftDockRounded">
-          {burger.name}
-        </h2>
-        <ul className="bp-banner bp-banner--secondary bp-banner--leftDockRounded u-inlineBlock">
-          {ingredients}
-        </ul>
-      </div>
-      <div className="bp-content bp-content--right">
-        <div className="bp-btnGroup bp-btnGroup--horizontal">
-          <LoveButton
-            totalLoves={burger.love.length}
-            onClick={onLoveButtonClicked}
-            isLoved={isLoved}
-          />
-          <LocationGroup
-            onClick={onLocationButtonClicked}
-            onFocusLost={onLocationGroupFocusLost}
-            isExpanded={isLocationGroupExpanded}
-            loc={burger.loc}
-          />
-          <ShareGroup
-            onClick={onShareButtonClicked}
-            onFocusLost={onShareGroupFocusLost}
-            isExpanded={isShareGroupExpanded}
-          />
+  render() {
+    const {
+      burger,
+      isLoved,
+      isShareGroupExpanded,
+      isLocationGroupExpanded,
+      onLoveButtonClicked,
+      onShareButtonClicked,
+      onLocationButtonClicked,
+      onLocationGroupFocusLost,
+      onShareGroupFocusLost,
+      id,
+    } = this.props;
+
+    if (burger.isFetching) {
+      return <div>FETCHING</div>;
+    }
+
+    if (!burger.data) {
+      return <div />;
+    }
+
+    const burgerData = burger.data;
+
+    const ingredients = burgerData.ingredients
+      .map((i, index) => (<li key={index}>{i}</li>));
+
+    return (
+      <div
+        className="bp-burgerContainer"
+        style={getBackgroundContainerStyle(burgerData.pictures)}
+      >
+        <div className="bp-brand u-allCaps">
+          Burger<span className="bp-brand-highlight">Porn</span>
+        </div>
+        <div className="bp-content bp-content--left">
+          <h2 className="u-allCaps bp-banner bp-banner--primary bp-banner--leftDockRounded">
+            {burgerData.name}{id}
+          </h2>
+          <ul className="bp-banner bp-banner--secondary bp-banner--leftDockRounded u-inlineBlock">
+            {ingredients}
+          </ul>
+        </div>
+        <div className="bp-content bp-content--right">
+          <div className="bp-btnGroup bp-btnGroup--horizontal">
+            <LoveButton
+              totalLoves={burgerData.totalLove}
+              onClick={onLoveButtonClicked}
+              isLoved={isLoved}
+            />
+            <LocationGroup
+              onClick={onLocationButtonClicked}
+              onFocusLost={onLocationGroupFocusLost}
+              isExpanded={isLocationGroupExpanded}
+              loc={burgerData.loc}
+            />
+            <ShareGroup
+              onClick={onShareButtonClicked}
+              onFocusLost={onShareGroupFocusLost}
+              isExpanded={isShareGroupExpanded}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+
 }
 
 function getBackgroundContainerStyle(pictures) {
+  if (!pictures) {
+    return undefined;
+  }
+
   const physicalPixelWidth = getDevicePixelRatio() * /* $(window).width() */1920;
-  const url = /* '/' + */ pickBestPicture(pictures, physicalPixelWidth).url;
+  const url = /* '/' + */ `http://localhost:3000/${pickBestPicture(pictures, physicalPixelWidth).url}`;
 
   return {
     background: `url(${url}) no-repeat center center fixed`,

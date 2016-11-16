@@ -14,8 +14,8 @@ import '../scss/popover-container.scss';
 import '../scss/map.scss';
 import '../scss/popover.scss';
 
-export default function Layout() {
-  return <BurgerApp />;
+export default function Layout({ params }) {
+  return <BurgerApp id={params.id} />;
 }
 
 Layout.displayName = 'Layout';

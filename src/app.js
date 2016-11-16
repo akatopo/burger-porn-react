@@ -1,35 +1,22 @@
 /* global location:false, document:false */
 
-import ChartMonitor from 'redux-devtools-chart-monitor';
-import DockMonitor from 'redux-devtools-dock-monitor';
 import Immutable from 'immutable';
-import LogMonitor from 'redux-devtools-log-monitor';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SliderMonitor from 'redux-slider-monitor';
 import createLogger from 'redux-logger';
 import { LOCATION_CHANGE, syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, hashHistory } from 'react-router';
 import { combineReducers } from 'redux-immutable';
 import { applyMiddleware, compose, createStore } from 'redux';
-import { createDevTools, persistState } from 'redux-devtools';
+import { persistState } from 'redux-devtools';
+import getDevTools from './devTools';
+import getRoutes from './routes';
 
 const IS_PROD = process.env.NODE_ENV !== 'development';
 const NOOP = () => null;
 
-const DevTools = IS_PROD ? NOOP : createDevTools(
-  <DockMonitor
-    toggleVisibilityKey="ctrl-h"
-    changePositionKey="ctrl-q"
-    changeMonitorKey="ctrl-m"
-    defaultIsVisible={false}
-  >
-    <LogMonitor />
-    <SliderMonitor />
-    <ChartMonitor />
-  </DockMonitor>
-);
+const DevTools = IS_PROD ? NOOP : getDevTools();
 
 const initialEnhancers = IS_PROD ? [] : [
   DevTools.instrument(),
@@ -39,12 +26,10 @@ const initialEnhancers = IS_PROD ? [] : [
 export default (options) => {
   const {
     initialState = {},
-    Layout = NOOP,
     loggerOptions = {},
     middleware = [],
     reducers = {},
     enhancers = {},
-    routes = [],
   } = options;
 
   const frozen = Immutable.fromJS(initialState);
@@ -67,16 +52,21 @@ export default (options) => {
     )
   );
 
-  const history = syncHistoryWithStore(browserHistory, store, {
+  const history = syncHistoryWithStore(hashHistory, store, {
     selectLocationState: (state) => (state.has('routing') ? state.get('routing').toJS() : null),
   });
 
-  const LayoutWrapper = (props) => (
-    <div id="wrapper">
-      <Layout {...props} store={store} />
-      <DevTools />
-    </div>
-  );
+  const devToolsWrapper = (Component) => {
+    const wrapper = (props) => (
+      <div id="wrapper">
+        <Component {...props} />
+        <DevTools />
+      </div>
+    );
+    wrapper.displayName = 'devToolsWrapper';
+
+    return wrapper;
+  };
 
   return {
     store,
@@ -85,10 +75,7 @@ export default (options) => {
       ReactDOM.render(
         <Provider store={store}>
           <Router history={history}>
-            <Route component={LayoutWrapper}>
-              {routes.map((route) =>
-                <Route key={route.path} path={route.path} component={route.component} />)}
-            </Route>
+            {getRoutes(devToolsWrapper)}
           </Router>
         </Provider>,
         rootElement
