@@ -4,15 +4,23 @@ import React, { Component } from 'react';
 import LoveButton from './LoveButton';
 import LocationGroup from './LocationGroup';
 import ShareGroup from './ShareGroup';
-
+import { createWindowResizeObservable } from './observables';
 import './scss/burger-container.scss';
 
 export default class BurgerContainer extends Component {
   componentDidMount() {
-    if (this.props.burger.data) {
-      return;
+    if (!this.props.burger.data) {
+      this.props.fetchBurger(this.props.id);
     }
-    this.props.fetchBurger();
+    createWindowResizeObservable({ debounceMs: 100 })
+      .forEach((innerWidth) => this.props.onWindowResized(innerWidth));
+  }
+
+  componentWillUpdate(nextProps) {
+    const nextId = nextProps.id;
+    if (nextId !== this.props.id) {
+      this.props.fetchBurger(nextId);
+    }
   }
 
   render() {
@@ -21,6 +29,7 @@ export default class BurgerContainer extends Component {
       isLoved,
       isShareGroupExpanded,
       isLocationGroupExpanded,
+      windowWidth,
       onLoveButtonClicked,
       onShareButtonClicked,
       onLocationButtonClicked,
@@ -30,7 +39,7 @@ export default class BurgerContainer extends Component {
     } = this.props;
 
     if (burger.isFetching) {
-      return <div>FETCHING</div>;
+      return <div />;
     }
 
     if (!burger.data) {
@@ -45,7 +54,7 @@ export default class BurgerContainer extends Component {
     return (
       <div
         className="bp-burgerContainer"
-        style={getBackgroundContainerStyle(burgerData.pictures)}
+        style={getBackgroundContainerStyle(burgerData.pictures, windowWidth)}
       >
         <div className="bp-brand u-allCaps">
           Burger<span className="bp-brand-highlight">Porn</span>
@@ -84,16 +93,19 @@ export default class BurgerContainer extends Component {
 
 }
 
-function getBackgroundContainerStyle(pictures) {
+function getBackgroundContainerStyle(pictures, width = 1920) {
   if (!pictures) {
     return undefined;
   }
 
-  const physicalPixelWidth = getDevicePixelRatio() * /* $(window).width() */1920;
-  const url = /* '/' + */ `http://localhost:3000/${pickBestPicture(pictures, physicalPixelWidth).url}`;
+  const physicalPixelWidth = getDevicePixelRatio() * width;
+  const url = pickBestPicture(pictures, physicalPixelWidth).url;
 
   return {
-    background: `url(${url}) no-repeat center center fixed`,
+    backgroundImage: `url(${url})`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
   };
 }

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import createObservable from './focusLost';
+import { createFocusLostObservable } from './observables';
 
 const baseButtonGroupClasses =
   'bp-btnGroup bp-btnGroup--vertical bp-btnGroup--expandable';
 
 export default class ShareGroup extends Component {
   componentDidMount() {
-    createObservable(this.groupRef)
+    createFocusLostObservable(this.groupRef)
       .forEach((/* target */) => {
         if (this.props.isExpanded) {
           this.props.onFocusLost();

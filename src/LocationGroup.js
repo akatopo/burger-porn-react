@@ -1,7 +1,7 @@
 /* global window: false */
 
 import React, { Component } from 'react';
-import createObservable from './focusLost';
+import { createFocusLostObservable } from './observables';
 
 const API_KEY = 'AIzaSyCOmQoeVtIKV5xyAVIe3BnFFejQgHEjv0I';
 const maps = require('google-maps-api')(API_KEY, ['places'])();
@@ -10,7 +10,7 @@ class LocationGroup extends Component {
   componentDidMount() {
     const { loc } = this.props;
 
-    createObservable(this.groupRef)
+    createFocusLostObservable(this.groupRef)
       .forEach((/* target */) => {
         const { isExpanded, onFocusLost } = this.props;
         if (isExpanded) {

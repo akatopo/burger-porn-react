@@ -4,14 +4,22 @@ import Rx from 'rx-lite';
 
 const bodyClick = Rx.Observable.fromEvent(document.body, 'click');
 
-export default createObservable;
+const windowResize = Rx.Observable.fromEvent(window, 'resize');
+
+export { createFocusLostObservable, createWindowResizeObservable };
 
 /////////////////////////////////////////////////////////////
 
-function createObservable(parentNode) {
+function createFocusLostObservable(parentNode) {
   return bodyClick
     .pluck('target')
     .filter((target) => !hasParent(parentNode, target));
+}
+
+function createWindowResizeObservable({ debounceMs = 500 }) {
+  return windowResize
+    .map(() => window.innerWidth)
+    .debounce(debounceMs);
 }
 
 function hasParent(parentElement, el) {

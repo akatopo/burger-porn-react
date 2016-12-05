@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import thunkMiddleware from 'redux-thunk';
+// import { routerMiddleware } from 'react-router-redux';
 import app from './app';
 
 const identity = (x) => x;
@@ -53,16 +54,23 @@ export const reducers = {
         return prevState;
     }
   },
+  windowWidth: (prevState, action) => {
+    if (action.type === 'SET_WINDOW_WIDTH') {
+      return action.windowWidth;
+    }
+    return prevState;
+  },
 };
 
 export const initialState = {
   title: 'Burger Porn',
+  windowWidth: null,
   isLoved: false,
   isShareGroupExpanded: false,
   isLocationGroupExpanded: false,
   burger: {
     isFetching: false,
-    data: undefined,
+    data: null,
   },
 };
 
