@@ -1,0 +1,26 @@
+<div class="bp-brand u-allCaps">
+  Burger<span class="bp-brand-highlight">Porn</span>
+</div>
+<div class="bp-content bp-content--left">
+  <div id="burger"></div>
+</div>
+<div class="bp-content bp-content--right">
+  <div class="bp-btnGroup bp-btnGroup--horizontal">
+    <button id="loveButton" class="bp-btn bp-btn--round">
+      <div class="bp-btn-label"></div>
+      {{>svg/love}}
+    </button>
+    <div id="locationGroup" class="bp-popoverContainer">
+      <button id="locationButton" class="bp-btn bp-btn--round">{{>svg/location}}</button>
+      <div class="bp-banner bp-popover bp-popover--bottomRight">
+        <div class="bp-map"></div>
+      </div>
+    </div>
+    <div id="shareGroup" class="bp-btnGroup bp-btnGroup--vertical bp-btnGroup--expandable">
+      <button id="shareButton" class="bp-btn bp-btn--round">{{>svg/share}}</button>
+      <a id="email" href target="_blank" class="bp-btn bp-btn--round">{{>svg/email}}</button>
+      <a id="tweet" href target="_blank" class="bp-btn bp-btn--round">{{>svg/twitter}}</a>
+      <button class="bp-btn bp-btn--round">{{>svg/facebook}}</button>
+    </div>
+  </div>
+</div>

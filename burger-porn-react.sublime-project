@@ -3,9 +3,19 @@
     {
       "follow_symlinks": true,
       "folder_exclude_patterns": [
-        "node_modules"
+        "node_modules",
+        ".coverage"
       ],
       "path": "."
     }
-  ]
+  ],
+  "SublimeLinter": {
+    "linters": {
+      "eslint": {
+        "excludes": [
+          "**/backend/**"
+        ]
+      }
+    }
+  }
 }
