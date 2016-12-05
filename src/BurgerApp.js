@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import fetch from 'isomorphic-fetch';
 // import { push } from 'react-router-redux';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import BurgerContainer from './BurgerContainer';
 
@@ -14,7 +14,7 @@ function fetchBurger(id) {
       .then((res) => res.json())
       .then((res) => {
         const burger = res.burgers[0];
-        hashHistory.replace(`/burgers/${burger.id}`);
+        browserHistory.replace(`/burgers/${burger.id}`);
         return dispatch({ type: 'RECEIVE_BURGER', burger });
         // dispatch(push(`/burgers/${burger.id}`));
       });

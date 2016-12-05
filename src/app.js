@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import createLogger from 'redux-logger';
 import { LOCATION_CHANGE, syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
-import { Router, hashHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { combineReducers } from 'redux-immutable';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { persistState } from 'redux-devtools';
@@ -52,7 +52,7 @@ export default (options) => {
     )
   );
 
-  const history = syncHistoryWithStore(hashHistory, store, {
+  const history = syncHistoryWithStore(browserHistory, store, {
     selectLocationState: (state) => (state.has('routing') ? state.get('routing').toJS() : null),
   });
 
