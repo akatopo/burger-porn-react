@@ -35,7 +35,7 @@ export default class BurgerContainer extends Component {
       onLocationButtonClicked,
       onLocationGroupFocusLost,
       onShareGroupFocusLost,
-      id,
+      /*id,*/
     } = this.props;
 
     if (burger.isFetching) {
@@ -61,7 +61,7 @@ export default class BurgerContainer extends Component {
         </div>
         <div className="bp-content bp-content--left">
           <h2 className="u-allCaps bp-banner bp-banner--primary bp-banner--leftDockRounded">
-            {burgerData.name}{id}
+            {burgerData.name}
           </h2>
           <ul className="bp-banner bp-banner--secondary bp-banner--leftDockRounded u-inlineBlock">
             {ingredients}
@@ -84,6 +84,7 @@ export default class BurgerContainer extends Component {
               onClick={onShareButtonClicked}
               onFocusLost={onShareGroupFocusLost}
               isExpanded={isShareGroupExpanded}
+              burgerData={burgerData}
             />
           </div>
         </div>

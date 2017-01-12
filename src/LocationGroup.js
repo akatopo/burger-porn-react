@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { createFocusLostObservable } from './observables';
 
-const API_KEY = 'AIzaSyCOmQoeVtIKV5xyAVIe3BnFFejQgHEjv0I';
+const API_KEY = 'AIzaSyAemdXhRMjT9ORHPa3-sIf6Eq_8Qj6hT30';
 const maps = require('google-maps-api')(API_KEY, ['places'])();
 
 class LocationGroup extends Component {
