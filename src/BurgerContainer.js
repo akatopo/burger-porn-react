@@ -72,6 +72,7 @@ export default class BurgerContainer extends Component {
             <LoveButton
               totalLoves={burgerData.totalLove}
               onClick={onLoveButtonClicked}
+              burgerId={burgerData.id}
               isLoved={isLoved}
             />
             <LocationGroup

@@ -1,3 +1,5 @@
+/* global localStorage:false, window: false */
+
 import { connect } from 'react-redux';
 import fetch from 'isomorphic-fetch';
 // import { push } from 'react-router-redux';
@@ -5,19 +7,60 @@ import { browserHistory } from 'react-router';
 
 import BurgerContainer from './BurgerContainer';
 
+function fetchToken() {
+  const tokenUrl = 'http://localhost:3000/api/v1/token';
+  const localToken = localStorage.getItem('token');
+
+  const tokenPromise = (!localToken || localToken === '') ?
+    fetch(tokenUrl) :
+    Promise.resolve({ json: () => ({ token: localToken }) });
+  return tokenPromise.then((res) => res.json());
+}
+
 function fetchBurger(id) {
   return (dispatch) => {
     dispatch({ type: 'REQUEST_BURGER' });
     const url = `http://localhost:3000/api/v1/burgers/${id || 'hungry'}`;
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        const burger = res.burgers[0];
+    const tokenPromise = fetchToken();
+
+    const burgerPromise = fetch(url)
+      .then((res) => res.json());
+
+    Promise.all([tokenPromise, burgerPromise])
+      .then((values) => {
+        const [tokenJson, burgerJson] = values;
+        const burger = burgerJson.burgers[0];
+        const token = tokenJson.token;
+        window.console.log(token);
+        localStorage.setItem('token', token);
         browserHistory.replace(`/burgers/${burger.id}`);
         return dispatch({ type: 'RECEIVE_BURGER', burger });
         // dispatch(push(`/burgers/${burger.id}`));
       });
+  };
+}
+
+function toggleLove(id, wasLoved) {
+  const url = `http://localhost:3000/api/v1/${wasLoved ? 'unlove' : 'love'}/${id}`;
+  const tokenPromise = fetchToken();
+  tokenPromise.then((tokenJson) => {
+    const accessToken = tokenJson.token;
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({ accessToken }),
+    });
+  });
+}
+
+function onLoveButtonClicked(id, wasLoved) {
+  return (dispatch) => {
+    dispatch({ type: 'TOGGLE_LOVE' });
+    toggleLove(id, wasLoved);
   };
 }
 
@@ -30,7 +73,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoveButtonClicked: () => dispatch({ type: 'TOGGLE_LOVE' }),
+  onLoveButtonClicked: (id, wasLoved) => dispatch(onLoveButtonClicked(id, wasLoved)),
   onShareButtonClicked: () => dispatch({ type: 'TOGGLE_SHARE' }),
   onLocationButtonClicked: () => dispatch({ type: 'TOGGLE_LOCATION' }),
   onShareGroupFocusLost: () => dispatch({ type: 'HIDE_SHARE' }),
