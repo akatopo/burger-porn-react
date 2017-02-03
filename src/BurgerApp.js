@@ -7,8 +7,11 @@ import { browserHistory } from 'react-router';
 
 import BurgerContainer from './BurgerContainer';
 
+const IS_PROD = process.env.NODE_ENV !== 'development';
+const baseApiUrl = IS_PROD ? process.env.BASE_API_URL : 'http://localhost:3000';
+
 function fetchToken() {
-  const tokenUrl = 'http://localhost:3000/api/v1/token';
+  const tokenUrl = `${baseApiUrl}/api/v1/token`;
   const localToken = localStorage.getItem('token');
 
   const tokenPromise = (!localToken || localToken === '') ?
@@ -20,7 +23,7 @@ function fetchToken() {
 function fetchBurger(id) {
   return (dispatch) => {
     dispatch({ type: 'REQUEST_BURGER' });
-    const url = `http://localhost:3000/api/v1/burgers/${id || 'hungry'}`;
+    const url = `${baseApiUrl}/api/v1/burgers/${id || 'hungry'}`;
 
     const tokenPromise = fetchToken();
 
@@ -42,7 +45,7 @@ function fetchBurger(id) {
 }
 
 function toggleLove(id, wasLoved) {
-  const url = `http://localhost:3000/api/v1/${wasLoved ? 'unlove' : 'love'}/${id}`;
+  const url = `${baseApiUrl}/api/v1/${wasLoved ? 'unlove' : 'love'}/${id}`;
   const tokenPromise = fetchToken();
   tokenPromise.then((tokenJson) => {
     const accessToken = tokenJson.token;
