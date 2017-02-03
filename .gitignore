@@ -32,3 +32,6 @@ bower_components
 
 # sublime
 *.sublime-workspace
+
+# environment vars
+.env

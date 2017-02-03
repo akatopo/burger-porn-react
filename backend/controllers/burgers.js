@@ -51,7 +51,7 @@ function processBurger(burger) {
   burger.pictures = burger.pictures
     .map(function (picture) {
       var pictureCopy = Object.assign({}, picture);
-      pictureCopy.url = config.host + pictureCopy.url;
+      pictureCopy.url = config.host + '/' + pictureCopy.url;
 
       return pictureCopy;
     });

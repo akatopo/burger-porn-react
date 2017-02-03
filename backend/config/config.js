@@ -3,7 +3,7 @@
 var path = require('path'),
     rootPath = path.normalize(__dirname + '/..'),
     env = process.env.NODE_ENV || 'development';
-    host = process.env.BURGER_HOST || 'http://localhost:3000/'
+    host = process.env.BASE_API_URL || 'http://localhost:3000'
 
 var config = {
   development: {
@@ -29,8 +29,8 @@ var config = {
     app: {
       name: 'burger-porn'
     },
-    port: 3000,
-    db: 'mongodb://localhost/burger-porn-production'
+    port: process.env.PORT || 3000,
+    db: process.env.MONGODB_URI
   }
 };
 
