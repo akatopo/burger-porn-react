@@ -24,9 +24,9 @@
     }
   },
   "scripts": {
-    "build": "neo build",
+    "build": "NODE_ENV='production' neo build --config prod.config.js && mv build/* backend/public/",
     "start": "neo start --port 4000 --config dev.config.js",
-    "backend": "neo start --port 3000 --config backend.dev.config.js",
+    "backend": "webpack --config backend.dev.config.js && node backend/app.bundle.js",
     "test": "neo test"
   },
   "keywords": [],
@@ -36,7 +36,7 @@
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
-    "mozilla-neo": "2.5.0",
+    "mozilla-neo": "git+https://git@github.com/akatopo/neo.git",
     "source-map-support": "^0.4.6",
     "webpack": "^1.13.3"
   },
