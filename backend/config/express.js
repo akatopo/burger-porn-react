@@ -45,6 +45,10 @@ module.exports = function(app, config) {
   //   require(controller)(app);
   // });
 
+  app.all('/burgers/*', function(req, res) {
+    res.sendFile(config.root + '/public/index.html');
+  });
+
   app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
