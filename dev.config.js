@@ -17,7 +17,7 @@ const extendedDev = merge(dev, {
       { test: /\.handlebars$/, loader: 'handlebars-loader' },
     ],
   },
-  devtool: '#eval-source-map',
+  devtool: '#source-map',
 });
 
 module.exports = extendedDev;
