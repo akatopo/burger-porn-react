@@ -35,3 +35,9 @@ bower_components
 
 # environment vars
 .env
+
+# built react app
+
+backend/public/bundle.js*
+backend/public/vendor.bundle.js*
+backend/public/index.html
