@@ -13,7 +13,7 @@ var methodOverride = require('method-override');
 var exphbs  = require('express-handlebars');
 var acceptWebp = require('accept-webp');
 var cors = require('cors');
-var herokuSslRedirect = require('heroku-ssl-redirect');;
+var herokuSslRedirect = require('heroku-ssl-redirect');
 var routes = require('../routes/routes');
 
 module.exports = function(app, config) {
