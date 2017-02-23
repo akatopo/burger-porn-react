@@ -13,7 +13,7 @@ var methodOverride = require('method-override');
 var exphbs  = require('express-handlebars');
 var acceptWebp = require('accept-webp');
 var cors = require('cors');
-
+var herokuSslRedirect = require('heroku-ssl-redirect');;
 var routes = require('../routes/routes');
 
 module.exports = function(app, config) {
@@ -28,6 +28,7 @@ module.exports = function(app, config) {
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
   app.use(cors());
+  app.use(herokuSslRedirect());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true
