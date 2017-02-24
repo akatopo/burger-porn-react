@@ -1,6 +1,4 @@
 const webpack = require('webpack');
-// const dev = require('mozilla-neo/config/webpack.dev');
-const merge = require('deepmerge');
 const path = require('path');
 const fs = require('fs');
 
@@ -11,7 +9,7 @@ fs.readdirSync('node_modules')
     nodeModules[mod] = `commonjs ${mod}`;
   });
 
-module.exports = merge({}, {
+module.exports = {
   entry: ['./backend/app.js'],
   target: 'node',
   output: {
@@ -36,4 +34,4 @@ module.exports = merge({}, {
     setImmediate: false,
   },
   devtool: 'sourcemap',
-});
+};

@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const path = require('path');
+const Vorpal = require('vorpal');
+const commands = require('./package.json').commands;
+
+const cli = new Vorpal();
+let register = (command) => {
+  const name = command.name;
+  const options = command.options || [];
+  const dir = path.resolve(__dirname, `./build-commands/${name}`);
+
+  let cliCommand = cli.command(name, command.description);
+
+  Object
+    .keys(options)
+    .map(option => {
+      if (Array.isArray(options[option])) {
+        cliCommand.option.apply(cliCommand, [option].concat(options[option]));
+      } else {
+        cliCommand.option(option, options[option]);
+      }
+    });
+
+  cliCommand
+    .action(function(args) {
+      const done = (exitCode) => process.exit(exitCode || 0);
+
+      if (this.commandObject._events) {
+        const options = Object
+          .keys(this.commandObject._events)
+          .reduce((base, key) => {
+            base[key] = this.commandObject[key];
+            return base;
+          }, {});
+
+        args.options = Object.assign(options, args.options);
+      }
+
+      process.env.NODE_ENV = command.environment || 'development';
+
+      require(dir)(args, done);
+    });
+};
+
+commands.map(register);
+
+cli
+  .find('exit')
+  .hidden();
+
+cli.parse.apply(cli, process.argv[2] ? [process.argv] : process.argv.concat(['help']));
