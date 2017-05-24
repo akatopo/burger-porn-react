@@ -6,11 +6,14 @@
   transition: all 0.5s;
   overflow: hidden;
   transform-origin: 50% 100% 0;
+  padding: 0;
+  border: 5px solid fade-out(black, $amount-globalOpacity);
+  border-radius: 5px;
 }
 
 .bp-popover--bottomRight {
-  right: 0;
-  bottom: ($height-btn--round + ($padding-btn--round * 2) + $margin-btnGroup);
+  right: $margin-content;
+  bottom: ($height-btn--round + ($padding-btn--round * 2) + $margin-btnGroup + $margin-content);
 }
 
 .bp-location-group .bp-popover {
