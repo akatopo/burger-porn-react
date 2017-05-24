@@ -53,42 +53,60 @@ export default class BurgerContainer extends Component {
 
     return (
       <div
-        className="bp-burgerContainer"
+        className="bp-burgerContainer u-flex u-flexCol"
         style={getBackgroundContainerStyle(burgerData.pictures, windowWidth)}
       >
         <div className="bp-brand u-allCaps">
           Burger<span className="bp-brand-highlight">Porn</span>
         </div>
-        <div className="bp-content bp-content--left">
-          <h2 className="u-allCaps bp-banner bp-banner--primary bp-banner--leftDockRounded">
-            {burgerData.name}
-          </h2>
-          <ul className="bp-banner bp-banner--secondary bp-banner--leftDockRounded u-inlineBlock">
-            {ingredients}
-          </ul>
-        </div>
-        <div className="bp-content bp-content--right">
-          <div className="bp-btnGroup bp-btnGroup--horizontal">
-            <LoveButton
-              totalLoves={burgerData.totalLove}
-              onClick={onLoveButtonClicked}
-              burgerId={burgerData.id}
-              isLoved={isLoved}
-            />
-            <LocationGroup
-              onClick={onLocationButtonClicked}
-              onFocusLost={onLocationGroupFocusLost}
-              isExpanded={isLocationGroupExpanded}
-              loc={burgerData.loc}
-            />
-            <ShareGroup
-              onClick={onShareButtonClicked}
-              onFocusLost={onShareGroupFocusLost}
-              isExpanded={isShareGroupExpanded}
-              burgerData={burgerData}
-            />
+        <div className="u-flex u-flexExpandTop u-flexCol u-sm-flexRow">
+          <div>
+            <div className="bp-bannerContainer">
+              <h2>
+                <span className="bp-banner bp-banner--primary bp-banner--leftDockRounded u-allCaps">
+                  {burgerData.name}
+                </span>
+              </h2>
+            </div>
+            <div className="bp-bannerContainer">
+              <ul
+                className="
+                  bp-banner
+                  bp-banner--secondary
+                  bp-banner--leftDockRounded
+                  u-display-inlineBlock
+                "
+              >
+                {ingredients}
+              </ul>
+            </div>
+          </div>
+          <div className="u-sm-flexExpandLeft u-sm-flexAlignSelfEnd u-flexAlignSelfCenter">
+            <div className="bp-btnGroup bp-btnGroup--horizontal">
+              <LoveButton
+                totalLoves={burgerData.totalLove}
+                onClick={onLoveButtonClicked}
+                burgerId={burgerData.id}
+                isLoved={isLoved}
+              />
+              <LocationGroup
+                onClick={onLocationButtonClicked}
+                onFocusLost={onLocationGroupFocusLost}
+                isExpanded={isLocationGroupExpanded}
+                loc={burgerData.loc}
+              />
+              <ShareGroup
+                onClick={onShareButtonClicked}
+                onFocusLost={onShareGroupFocusLost}
+                isExpanded={isShareGroupExpanded}
+                burgerData={burgerData}
+              />
+            </div>
           </div>
         </div>
+        {
+          // <div className="bp-panel" />
+        }
       </div>
     );
   }

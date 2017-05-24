@@ -1,9 +1,7 @@
 @import 'vars';
 @import 'mixins';
 
-.bp-btnGroup--horizontal {
-  margin-right: -$margin-btnGroup;
-}
+.bp-btnGroup--horizontal {}
 
 .bp-btnGroup--vertical {
   margin-top: -$margin-btnGroup;
@@ -46,4 +44,10 @@
 .bp-btnGroup--horizontal > .bp-btnGroup,
 .bp-btnGroup--horizontal > .bp-popoverContainer {
   margin-right: $margin-btnGroup;
+}
+
+.bp-btnGroup--horizontal > .bp-btn:last-child,
+.bp-btnGroup--horizontal > .bp-btnGroup:last-child,
+.bp-btnGroup--horizontal > .bp-popoverContainer:last-child {
+  margin-right: 0;
 }

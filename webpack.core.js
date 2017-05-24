@@ -6,7 +6,7 @@ const HtmlPlugin = require('html-webpack-plugin');
 const path = require('path');
 const qs = require('qs');
 const webpackPostcssTools = require('webpack-postcss-tools');
-// const postCssCustomMedia = require('postcss-custom-media');
+const postCssCustomMedia = require('postcss-custom-media');
 
 const CWD = process.cwd();
 const BUILD = path.join(CWD, 'build');
@@ -28,7 +28,7 @@ const loader = (name) => `${name}?${qs.stringify(require(`.\/${name}`), {
   arrayFormat: 'brackets'
 })}`;
 
-// const map = webpackPostcssTools.makeVarMap('src/suit.css');
+const map = webpackPostcssTools.makeVarMap('src/scss/suit.css');
 
 module.exports = {
   node: {
@@ -62,9 +62,9 @@ module.exports = {
   },
   postcss: [
     webpackPostcssTools.prependTildesToImports,
-    // postCssCustomMedia({
-    //   extensions: map.media,
-    // }),
+    postCssCustomMedia({
+      extensions: map.media,
+    }),
   ],
   module: {
     preLoaders: [

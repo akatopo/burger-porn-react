@@ -1,6 +1,11 @@
 @import 'vars';
 
-.bp-banner {
+.bp-bannerContainer {
+  margin-left: -$margin-content;
+  margin-top: 40px;
+}
+
+.bp-bannerContainer .bp-banner {
   background-color: fade-out(black, $amount-globalOpacity);
   padding: $padding-banner;
   padding-left: $margin-content;
@@ -8,21 +13,18 @@
 
 ul.bp-banner {
   list-style: none;
-  margin: 0;
 }
 
-.bp-banner--secondary {
+.bp-banner.bp-banner--secondary {
   background-color: fade-out($color-pornPink, $amount-globalOpacity);
   color: white;
 }
 
-.bp-banner--primary {
+.bp-banner.bp-banner--primary {
   font-size: $fontSize-largest;
   color: $color-pornPink;
-  margin: 40px 0;
 }
 
-.bp-content .bp-banner--leftDockRounded {
+.bp-banner.bp-banner--leftDockRounded {
   border-radius: 0 $borderRadius-banner--leftDockRounded $borderRadius-banner--leftDockRounded 0px;
-  margin-left: -$margin-content;
 }
